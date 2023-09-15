@@ -7,19 +7,24 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import SearchIcon from "@mui/icons-material/Search";
 import { IconButton } from "@mui/material";
 import SidebarChat from "../SideBarChat/SidebarChat";
-import db from "../Firebase/firebase";
+// import "firebase";
+import db from "../firebase";
+import { useStateValue } from "../stateProvider/stateProvider";
+
 function Sidebar() {
   const [rooms, setRooms] = useState([]);
+  // const [{ user }, dispatch] = useStateValue;
   useEffect(() => {
-    db.collection("rooms").onsnapshot((snapshot) =>
+    db.collection("rooms").onSnapshot((snapshot) =>
       setRooms(
         snapshot.docs.map((doc) => ({
           id: doc.id,
-          date: doc.data(),
+          data: doc.data(),
         }))
       )
     );
   }, []);
+
   return (
     <div className="sidebar">
       <div className="Sidebar_header">
@@ -42,8 +47,13 @@ function Sidebar() {
           <input type="text" placeholder="Search or start new chat" />
         </div>
       </div>
+
       <div className="sidebar_chat">
         <SidebarChat addNewChat />
+        {rooms.map((room) => (
+          <SidebarChat Key={room.id} id={room.id} name={room.data.name} />
+        ))}
+
         <SidebarChat />
         <SidebarChat />
       </div>
