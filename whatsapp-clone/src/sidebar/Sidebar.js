@@ -54,8 +54,8 @@ function Sidebar() {
           <SidebarChat Key={room.id} id={room.id} name={room.data.name} />
         ))}
 
-        <SidebarChat />
-        <SidebarChat />
+        {/* <SidebarChat />
+        <SidebarChat /> */}
       </div>
     </div>
   );

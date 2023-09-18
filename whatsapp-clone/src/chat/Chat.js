@@ -50,7 +50,12 @@ function Chat() {
         <Avatar />
         <div className="chat_headerInfo">
           <h3> {roomName}</h3>
-          <p>{roomName}</p>
+          <p>
+            last seen {""}
+            {new Date(
+              message[message.length - 1]?.timestamp?.toDate()
+            ).toUTCString()}
+          </p>
         </div>
         <div className="chat_headerRight">
           <IconButton>
@@ -66,7 +71,11 @@ function Chat() {
       </div>
       <div className="chat_body">
         {message.map((message) => (
-          <p className={`chat_message ${true && "chat_reciver"}`}>
+          <p
+            className={`chat_message ${
+              (message.name === user.displayName) & "chat_reciver"
+            }`}
+          >
             <span className="chat_name">{message.name}</span>
             {message.message}
             <span className="chat_timestamp">
